@@ -1,6 +1,14 @@
 const React = require('react')
 const prettyMilliseconds = require('pretty-ms')
 
+
+/**
+ * TODO: 
+ * - let user know the rosh timer has been copied to clipboard in an elegant manner
+ * - Create new timers on roshan click for alex's cool design ideas
+ * - maybe start timer at -2:00 or whatever since dota doesn't start at 0:00
+ * 
+ */
 class App extends React.Component {
   constructor (props) {
     super(props)
@@ -67,14 +75,11 @@ class App extends React.Component {
 
     //log to console for our own sanity
     console.log(roshDeathTime, newAegisExpire, newRespTime1, newRespTime2)
+    //copy to user's clipboard
     navigator.clipboard.writeText(
       newAegisExpire + ' ' + newRespTime1 + ' ' + newRespTime2
     )
 
-    /**
-     * TODO: let user know the rosh timer has been copied to clipboard
-     * in an elegant manner
-     */
   }
 
   render () {
