@@ -37,14 +37,14 @@ class App extends React.Component {
       <button onClick={this.stopTimer}>stop</button> :
       null
     let reset = (this.state.time != 0 && !this.state.isOn) ?
-      <button onClick={this.resetTimer}>reset</button> :
+      <button class="red" onClick={this.resetTimer}>reset</button> :
       null
     let resume = (this.state.time != 0 && !this.state.isOn) ?
-      <button onClick={this.startTimer}>resume</button> :
+      <button class="green" onClick={this.startTimer}>resume</button> :
       null
     return(
       <div>
-        <h3>timer: {prettyMilliseconds(this.state.time, {colonNotation:true})}</h3>
+        <h3>Timer: {prettyMilliseconds(this.state.time, {colonNotation:true})}</h3>
         {start}
         {resume}
         {stop}
