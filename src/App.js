@@ -17,7 +17,7 @@ class App extends React.Component {
     this.startTimer = this.startTimer.bind(this)
     this.stopTimer = this.stopTimer.bind(this)
     this.resetTimer = this.resetTimer.bind(this)
-    this.startRoshTimer = this.startRoshTimer.bind(this)
+    this.roshClick = this.roshClick.bind(this)
   }
   startTimer() {
     this.setState({
@@ -36,15 +36,37 @@ class App extends React.Component {
   resetTimer() {
     this.setState({time: 0})
   }
-  startRoshTimer(){
+  roshClick(e){
+    //compute rosh timers
+    let roshDeathTime = this.state.time;
+    let newAegisExpire = this.state.time + 300000; //5 mins = 300000 milliseconds
+    let newRespTime1 = this.state.time + 480000; // 8 mins = 480000 milliseconds
+    let newRespTime2 = this.state.time + 660000; // 11 mins = 660000 milliseconds
+
     this.setState({
-      roshDeathTime: this.state.time,
-      aegisExpireTime: this.roshDeathTime + 5,
-      roshRespawnTime1: this.roshDeathTime + 8, 
-      roshRespawnTime2: this.roshDeathTime + 11,
+      roshDeathTime: e.target.value,
+      aegisExpireTime: newAegisExpire,
+      roshRespawnTime1: newRespTime1, 
+      roshRespawnTime2: newRespTime2,
       roshDead: true
     })
-    navigator.clipboard.writeText(this.aegisExpireTime + ' ' + this.roshRespawnTime1 + ' ' + this.roshRespawnTime2)
+
+    //format rosh timers
+    newAegisExpire = prettyMilliseconds(newAegisExpire, {colonNotation:true}); 
+    newRespTime1 = prettyMilliseconds(newRespTime1, {colonNotation:true}); 
+    newRespTime2 = prettyMilliseconds(newRespTime2, {colonNotation:true}); 
+    newAegisExpire = newAegisExpire.slice(0, -2);
+    newRespTime1 = newRespTime1.slice(0, -2); 
+    newRespTime2 = newRespTime2.slice(0, -2); 
+
+    //log to console for our own sanity
+    console.log(roshDeathTime, newAegisExpire, newRespTime1, newRespTime2); 
+    navigator.clipboard.writeText(newAegisExpire + ' ' + newRespTime1 + ' ' + newRespTime2); 
+
+    /**
+     * TODO: let user know the rosh timer has been copied to clipboard 
+     * in an elegant manner
+     */
   }
 
   render() {
@@ -61,7 +83,7 @@ class App extends React.Component {
       <button class="green" onClick={this.startTimer}>resume</button> :
       null
     let rosh = (this.state.isOn) ? 
-      <button onClick={this.startRoshTimer}> Rosh died! </button> : 
+      <button onClick={this.roshClick.bind(this)} value={this.state.time}> Rosh died! </button> : 
       null 
 
     return(
