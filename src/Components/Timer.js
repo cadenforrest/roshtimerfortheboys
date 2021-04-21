@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import DynamicProgress from "./Progress";
+import { Progress } from "rsuite";
 const prettyMilliseconds = require("pretty-ms");
 
 class Timer extends Component {
@@ -128,7 +130,12 @@ class Timer extends Component {
         {resume}
         {stop}
         {reset}
-        <div ref={this.roshButton} autofocus onKeyDown={this.handleRoshHotkey} tabIndex={1}>
+        <div
+          ref={this.roshButton}
+          autofocus
+          onKeyDown={this.handleRoshHotkey}
+          tabIndex={1}
+        >
           {rosh}
         </div>
       </div>
