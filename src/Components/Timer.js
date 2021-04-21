@@ -18,16 +18,16 @@ class Timer extends Component {
     this.stopTimer = this.stopTimer.bind(this);
     this.resetTimer = this.resetTimer.bind(this);
     this.roshTimer = this.roshTimer.bind(this);
+    this.roshButton = React.createRef();
+    this.handleRoshHotkey = this.handleRoshHotkey.bind(this);
   }
-  componentDidMount() {
-    document.addEventListener("keydown", this.handleRoshHotkey);
-  }
+
   handleRoshClick() {
     console.log("button was clicked!");
     this.roshTimer();
   }
-  handleRoshHotkey = (event) => {
-    if (event.key === "r") {
+  handleRoshHotkey = (e) => {
+    if (e.key === "r" || e.keyCode === 13) {
       console.log("hotkey was pressed!");
       this.roshTimer();
     }
@@ -55,6 +55,7 @@ class Timer extends Component {
   }
   roshTimer() {
     //compute rosh timers
+
     let roshDeathTime = this.state.time;
     let newAegisExpire = this.state.time + 300000; //5 mins = 300000 milliseconds
     let newRespTime1 = this.state.time + 480000; // 8 mins = 480000 milliseconds
@@ -106,7 +107,16 @@ class Timer extends Component {
         </button>
       ) : null;
     let rosh = this.state.isOn ? (
-      <button onClick={() => this.handleRoshClick()}> Rosh died! </button>
+      <div className={this.state.focused ? "focused" : ""}>
+        <button
+          onClick={() => this.handleRoshClick()}
+          autoFocus
+          ref={(c) => (this._input = c)}
+        >
+          {" "}
+          Rosh died!{" "}
+        </button>
+      </div>
     ) : null;
 
     return (
@@ -118,7 +128,7 @@ class Timer extends Component {
         {resume}
         {stop}
         {reset}
-        <div onKeyDown={() => this.handleRoshHotkey()} tabIndex={0}>
+        <div ref={this.roshButton} autofocus onKeyDown={this.handleRoshHotkey} tabIndex={1}>
           {rosh}
         </div>
       </div>

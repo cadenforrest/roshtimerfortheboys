@@ -10,6 +10,8 @@ import { Hotkeys } from "react-hotkeys";
  *
  */
 
+
+
 class App extends React.Component {
   render() {
     return <Timer></Timer>;
