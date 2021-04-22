@@ -13,6 +13,7 @@ class Timer extends Component {
       roshRespawnTime2: 0,
       start: 0,
       isOn: false,
+      showCopiedMessage: false
     };
     this.startTimer = this.startTimer.bind(this);
     this.stopTimer = this.stopTimer.bind(this);
@@ -22,14 +23,26 @@ class Timer extends Component {
     this.handleRoshHotkey = this.handleRoshHotkey.bind(this);
   }
 
+  handleCopiedMessage(){
+    this.setState({
+      showCopiedMessage: true
+    }); 
+    setTimeout(()=>{
+      this.setState({
+        showCopiedMessage: false
+      }); 
+    }, 2000); 
+  }
   handleRoshClick() {
     console.log("button was clicked!");
     this.roshTimer();
+    this.handleCopiedMessage(); 
   }
   handleRoshHotkey = (e) => {
     if (e.key === "r" || e.keyCode === 13) {
       console.log("hotkey was pressed!");
       this.roshTimer();
+      this.handleCopiedMessage(); 
     }
   };
   startTimer() {
@@ -108,6 +121,7 @@ class Timer extends Component {
       ) : null;
     let rosh = this.state.isOn ? (
       <div className={this.state.focused ? "focused" : ""}>
+        {this.state.showCopiedMessage && <p>Copied to clipboard!</p>}
         <button
           onClick={() => this.handleRoshClick()}
           autoFocus
