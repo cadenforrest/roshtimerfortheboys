@@ -1,6 +1,5 @@
 import React from "react";
 import Timer from "./Components/Timer";
-import { Hotkeys } from "react-hotkeys";
 
 /**
  * TODO:
